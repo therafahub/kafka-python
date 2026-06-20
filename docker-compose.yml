@@ -36,8 +36,8 @@ services:
       - "8081:8081"
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      # Use the broker's host:port that other containers can reach
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker:9092'
+      # Use the broker's internal listener for inter-container communication
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker:29092'
       SCHEMA_REGISTRY_LISTENERS: 'http://0.0.0.0:8081'
       SCHEMA_REGISTRY_DEBUG: 'true'
 
@@ -49,8 +49,8 @@ services:
     ports:
       - "9021:9021"
     environment:
-      # Control Center should also connect to the broker via the container network
-      CONTROL_CENTER_BOOTSTRAP_SERVERS: 'broker:9092'
+      # Control Center should connect to the broker internal listener
+      CONTROL_CENTER_BOOTSTRAP_SERVERS: 'broker:29092'
       CONTROL_CENTER_REPLICATION_FACTOR: 1
       CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
       CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
