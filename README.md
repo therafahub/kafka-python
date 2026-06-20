@@ -10,6 +10,8 @@ kafka-python/
 ├── consumer.py              # Basic JSON consumer
 ├── productor_pro.py         # Advanced Avro producer
 ├── consumidor_pro.py        # Advanced Avro consumer
+├── productor_seguro.py      # Secure Avro producer with SASL auth
+├── consumidor_seguro.py     # Secure Avro consumer with SASL auth
 ├── docker-compose.yml       # Docker services configuration
 ├── kafka_server_jaas.conf   # SASL/PLAIN authentication config
 ├── requirements.txt         # Python dependencies
@@ -51,6 +53,8 @@ This starts:
 - **Schema Registry** (8081)
 - **Control Center** (9021) - Web UI for monitoring
 
+> Note: Control Center must connect to the broker and Schema Registry using internal Docker hostnames (`broker:29092` and `schema-registry:8081`). The current `docker-compose.yml` includes those settings for the container.
+
 ## Usage
 
 ### Basic JSON Messaging
@@ -80,6 +84,20 @@ Sends structured user data serialized with Avro schema to `usuarios-eventos` top
 python consumidor_pro.py
 ```
 Consumes and deserializes Avro messages from `usuarios-eventos` topic.
+
+### Secure Avro Messaging (SASL_PLAINTEXT)
+
+#### Secure Producer
+```bash
+python productor_seguro.py
+```
+Sends Avro user events to `usuarios-eventos` using SASL/PLAIN authentication.
+
+#### Secure Consumer
+```bash
+python consumidor_seguro.py
+```
+Consumes and deserializes Avro messages from `usuarios-eventos` using SASL/PLAIN authentication.
 
 ## Configuration Details
 
